@@ -44,8 +44,11 @@ def process(gpx_file: str, distance: int, files: int) -> None:
 
     for index, segment in enumerate(segments):
         clone = gpx.clone()
+        new_name = f"split-{index+1}-{gpx.name}"
         clone.tracks[0].segments = [segment]
+        clone.tracks[0].name = new_name
         new_path = gpx_path.parent.joinpath(f"split-{index+1}-{gpx_path.name}")
+        clone.name = new_name
         with open(new_path, "w") as f:
             f.write(clone.to_xml())
             print(f"Saved {new_path}")
